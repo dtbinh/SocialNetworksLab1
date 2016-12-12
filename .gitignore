@@ -1,0 +1,5 @@
+# exclude everything except .m and images
+/*
+!.gitignore
+!*.m
+!/images

@@ -1,4 +1,4 @@
-%% Social Networks - Lab 1 Yannis
+%% Social Networks - Lab 1 Yannis Petros
 
 clear;
 vertices = 190;

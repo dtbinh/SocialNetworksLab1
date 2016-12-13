@@ -7,7 +7,7 @@ saveas(gcf,'./images/reg_con.png');
 
 per_errg = conper_errg();
 figure;
-plot([2:2:10],per_errg);
+plot([100:100:800],per_errg);
 saveas(gcf,'./images/errg_con.png');
 
 per_rgg = conper_rgg();
@@ -20,7 +20,7 @@ figure;
 plot([2:2:10],per_basf);
 saveas(gcf,'./images/basf_con.png');
 
-per_wssw = conper_wssw()
+per_wssw = conper_wssw();
 figure;
 for i =1:5
 plot([0.1:0.1:0.7],per_wssw(i,:));
@@ -51,6 +51,7 @@ end
 function per = conper_errg()
 n=100;
 count=1;
+con = 0;
 for M = 100:100:800
     for i = 1:100
     A = erdrey(n,M);   

@@ -71,9 +71,10 @@ plot(x,y);
 saveas(gcf,'./images/rger_bcent.png');
 
 %%eigencentrality
-eigen_cent = eigencentrality(rger)
+eigen_cent = eigencentrality(rger);
 eigen_cent_avg = sum(eigen_cent)/190;
 figure;
 [y,x] = cumulative(eigen_cent);
 plot(x,y);
 saveas(gcf,'./images/rger_ecent.png');
+save('./images/rger')

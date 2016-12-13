@@ -12,7 +12,7 @@ G.Adj = full(swws);
 G.nv = vertices;
 G.ne = sum(sum(full(swws)))/2;
 reg_deg = sum(full(swws));
-sw_deg = reg_deg';
+swws_deg = reg_deg';
 
 plotGraphBasic(G, markerSize, addText);
 saveas(gcf,'./images/swws_plot.png');
@@ -71,9 +71,10 @@ plot(x,y);
 saveas(gcf,'./images/swws_bcent.png');
 
 %%eigencentrality
-eigen_cent = eigencentrality(swws)
+eigen_cent = eigencentrality(swws);
 eigen_cent_avg = sum(eigen_cent)/190;
 figure;
 [y,x] = cumulative(eigen_cent);
 plot(x,y);
 saveas(gcf,'./images/swws_ecent.png');
+save('./images/swws')

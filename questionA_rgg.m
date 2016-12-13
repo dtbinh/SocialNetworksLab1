@@ -40,11 +40,11 @@ rggW_mean = mean(rggW_str);
 
 %% average path length
 avgPath_rgg = ave_path_length(rgg);
-c = all_shortest_paths(rgg);
+c = all_shortest_paths(sparse(rgg));
 var_rgg = var(c(:));
 
 %%clustering coefficients
-cc_rgg = clustering_coefficients(rgg);
+cc_rgg = clustering_coefficients(sparse(rgg));
 cc_rgg = cc_rgg';
 figure;
 [y,x] = cumulative(cc_rgg);
@@ -76,9 +76,10 @@ plot(x,y);
 saveas(gcf,'./images/rgg_bcent.png');
 
 %%eigencentrality
-eigen_cent = eigencentrality(rgg)
+eigen_cent = eigencentrality(rgg);
 eigen_cent_avg = sum(eigen_cent)/190;
 figure;
 [y,x] = cumulative(eigen_cent);
 plot(x,y);
 saveas(gcf,'./images/rgg_ecent.png');
+save('./images/rgg')

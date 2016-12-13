@@ -7,15 +7,15 @@ G.x = G.x';
 G.y = G.y';
 
 %% REG
-reg = smallw(vertices, 2, 1); %% gia vathmo 4
+reg = smallw(vertices, 2, 0); %% gia vathmo 4
 G.Adj = full(reg);
 G.nv = vertices;
 G.ne = sum(sum(full(reg)))/2;
 reg_deg = sum(full(reg));
 reg_deg = reg_deg';
 
-%%plotGraphBasic(G, markerSize,addText);
-%%saveas(gcf,'./images/reg_plot.png');
+plotGraphBasic(G, markerSize,addText);
+saveas(gcf,'./images/reg_plot.png');
 [~, cumdist, dist] = cumulativedist(reg_deg,190);
 figure;bar(dist);
 saveas(gcf,'./images/reg_deg.png');
@@ -39,10 +39,11 @@ c = all_shortest_paths(reg);
 var_reg = var(c(:));
 
 %%clustering coefficients
-[~,cc_reg] = clustering_coefficients(reg);
+cc_reg = clustering_coefficients(reg);
 cc_reg = cc_reg';
 figure;
-[y,x] = cumulative(cc_reg,190);
+[y,x] = cumulative(cc_reg);
+bar(x,y)
 saveas(gcf,'./images/reg_ccdist.png');
 cc_avg=sum(cc_reg)/190;
 
@@ -70,9 +71,10 @@ plot(x,y);
 saveas(gcf,'./images/reg_bcent.png');
 
 %%eigencentrality
-eigen_cent = eigencentrality(reg)
+eigen_cent = eigencentrality(reg);
 eigen_cent_avg = sum(eigen_cent)/190;
 figure;
 [y,x] = cumulative(eigen_cent);
 plot(x,y);
 saveas(gcf,'./images/reg_ecent.png');
+save('./images/reg')

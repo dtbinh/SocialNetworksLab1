@@ -41,10 +41,11 @@ c = all_shortest_paths(sfba);
 var_sfba = var(c(:));
 
 %%clustering coefficients
-[~,cc_sfba] = clustering_coefficients(sfba);
+cc_sfba = clustering_coefficients(sfba);
 cc_sfba = cc_sfba';
 figure;
-[y,x] = cumulative(cc_sfba,190);
+[y,x] = cumulative(cc_sfba);
+plot(x,y);
 saveas(gcf,'./images/sfba_ccdist.png');
 cc_avg=sum(cc_sfba)/190;
 

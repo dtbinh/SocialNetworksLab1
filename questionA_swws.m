@@ -39,10 +39,11 @@ c = all_shortest_paths(swws);
 var_swws = var(c(:));
 
 %%clustering coefficients
-[~,cc_swws] = clustering_coefficients(swws);
+cc_swws = clustering_coefficients(swws);
 cc_swws = cc_swws';
 figure;
-[y,x] = cumulative(cc_swws,190);
+[y,x] = cumulative(cc_swws);
+plot(x,y);
 saveas(gcf,'./images/swws_ccdist.png');
 cc_avg=sum(cc_swws)/190;
 

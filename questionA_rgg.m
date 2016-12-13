@@ -44,10 +44,11 @@ c = all_shortest_paths(rgg);
 var_rgg = var(c(:));
 
 %%clustering coefficients
-[~,cc_rgg] = clustering_coefficients(rgg);
+cc_rgg = clustering_coefficients(rgg);
 cc_rgg = cc_rgg';
 figure;
-[y,x] = cumulative(cc_rgg,190);
+[y,x] = cumulative(cc_rgg);
+plot(x,y);
 saveas(gcf,'./images/rgg_ccdist.png');
 cc_avg=sum(cc_rgg)/190;
 

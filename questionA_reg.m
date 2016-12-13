@@ -59,7 +59,7 @@ clos_cent = closeness(reg);
 clos_cent_avg = sum(clos_cent/190);
 figure;
 [y,x] = cumulative(clos_cent);
-plot(x,y);
+bar(x,y);
 saveas(gcf,'./images/reg_ccent.png');
 
 %%betweeness

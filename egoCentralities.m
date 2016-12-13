@@ -2,17 +2,17 @@
 
 clear;
 vertices = 190;
-load('results/reg/reg_workspace.mat')
-load('results/rgg/rgg_workspace.mat')
-load('results/er/er_workspace.mat')
-load('results/sf/sf_workspace.mat')
-load('results/sw/sw_workspace.mat')
+load('./images/reg.mat')
+load('./images/rgg.mat')
+load('./images/rger.mat')
+load('./images/sfba.mat')
+load('./images/swws.mat')
 
 reg_ego_net = ego_network(reg);
 rgg_ego_net = ego_network(rgg);
-er_ego_net = ego_network(er);
-sf_ego_net = ego_network(sf);
-sw_ego_net = ego_network(sw);
+er_ego_net = ego_network(rger);
+sf_ego_net = ego_network(sfba);
+sw_ego_net = ego_network(swws);
 
 reg_ego_cent = zeros(vertices,1);
 rgg_ego_cent = zeros(vertices,1);
@@ -38,9 +38,8 @@ for node = 1:vertices
     sf_ego_cent(node) = reciprocalSum(sf_ego_net.(field));
     
     sw_ego_net.(field) = (sw_ego_net.(f)^2)*(1-sw_ego_net.(f));
-    sw_ego_cent(node) = reciprocalSum(sw_ego_net.(field));
-    
+    sw_ego_cent(node) = reciprocalSum(sw_ego_net.(field));   
 end
-
+save('./images/egocents');
 
 

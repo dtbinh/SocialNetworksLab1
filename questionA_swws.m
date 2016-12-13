@@ -29,7 +29,7 @@ swW = 10*rand(vertices);
 swW = swW.*full(swws);
 swW_str = sum(swW);
 [~, cumstr, ~] = cumulativedist(swW_str,190);
-saveas(gcf,'./images/swws_cumsrt.png');
+saveas(gcf,'./images/swws_cumstr.png');
 figure;bar(cumstr);
 swW_mean = mean(swW_str);
 

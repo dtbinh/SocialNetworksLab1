@@ -7,49 +7,72 @@ G.x = G.x';
 G.y = G.y';
 
 %% RG(ER)
-rg = erdrey(vertices, 750);
-G.Adj = full(rg);
+rger = erdrey(vertices, 750);
+G.Adj = full(rger);
 G.nv = vertices;
-G.ne = sum(sum(full(rg)))/2;
-rg_deg = sum(full(rg));
-rg_deg = rg_deg';
+G.ne = sum(sum(full(rger)))/2;
+rger_deg = sum(full(rger));
+rger_deg = rger_deg';
 
 plotGraphBasic(G, markerSize, addText);
 saveas(gcf,'./images/rger_plot.png')
-[~, cumdist, dist] = cumulativedist(rg_deg,190);
+[~, cumdist, dist] = cumulativedist(rger_deg,190);
 figure;bar(dist);
 saveas(gcf,'./images/rger_deg.png')
 figure;bar(cumdist);
 saveas(gcf,'./images/rger_cumdist.png')
-rg_mean = mean(rg_deg);
-rg_std = std(rg_deg);
+rg_mean = mean(rger_deg);
+rg_std = std(rger_deg);
 
-%weighted
+				%weighted
 rgW = 10*rand(vertices);
-rgW = rgW.*full(rg);
+rgW = rgW.*full(rger);
 rgW_str = sum(rgW);
 [~, cumstr, ~] = cumulativedist(rgW_str,190);
 saveas(gcf,'./images/rger_cumstr.png')
 figure;bar(cumstr);
 rgW_mean = mean(rgW_str);
 
-% average path length
-avgPath_rg = ave_path_length(rg);
+%% average path length
+avgPath_rger = ave_path_length(rger);
+c = all_shortest_paths(rger);
+var_rger = var(c(:));
 
-%clustering coefficients
-cc_rger = clustering_coefficients(rgg);
+%%clustering coefficients
+[~,cc_rger] = clustering_coefficients(rger);
+cc_rger = cc_rger';
 figure;
-continuous_cumulative_dist(cc_rger',190);
-saveas(gcf,'./images/rger_ccdist.png')
+[y,x] = cumulative(cc_rger,190);
+saveas(gcf,'./images/rger_ccdist.png');
 cc_avg=sum(cc_rger)/190;
 
-%centrality
+%%centrality
 figure;
 [~,ccent] = cumulativecentrality(rger_deg,190);
 bar(ccent);
+saveas(gcf,'./images/rger_dcent.png');
+deg_cent_avg = sum(rger_deg)/190;
+
+%%closeness
+clos_cent = closeness(rger);
+clos_cent_avg = sum(clos_cent/190);
+figure;
+[y,x] = cumulative(clos_cent);
+plot(x,y);
 saveas(gcf,'./images/rger_ccent.png');
 
-deg_cent = sum(rger_deg)/190;
-clos_cent = sum(closeness(rger))/190;
-bet_cent = sum(node_betweenness_faster(rger))/190;
-eigen_cent = sum(eigencentrality(rger))/190;
+%%betweeness
+bet_cent = node_betweenness_faster(rger);
+bet_cent_avg = sum(bet_cent)/190;
+figure;
+[y,x] = cumulative(bet_cent);
+plot(x,y);
+saveas(gcf,'./images/rger_bcent.png');
+
+%%eigencentrality
+eigen_cent = eigencentrality(rger)
+eigen_cent_avg = sum(eigen_cent)/190;
+figure;
+[y,x] = cumulative(eigen_cent);
+plot(x,y);
+saveas(gcf,'./images/rger_ecent.png');

@@ -38,23 +38,46 @@ figure;bar(cumstr);
 saveas(gcf,'./images/rgg_cumstr.png');
 rggW_mean = mean(rggW_str);
 
-% average path length
+%% average path length
 avgPath_rgg = ave_path_length(rgg);
+c = all_shortest_paths(rgg);
+var_rgg = var(c(:));
 
-%clustering coefficients
-cc_rgg = clustering_coefficients(sparse(rgg));
+%%clustering coefficients
+[~,cc_rgg] = clustering_coefficients(rgg);
+cc_rgg = cc_rgg';
 figure;
-continuous_cumulative_dist(cc_rgg',190);
-saveas(gcf,'./images/rgg_ccdist.png')
+[y,x] = cumulative(cc_rgg,190);
+saveas(gcf,'./images/rgg_ccdist.png');
 cc_avg=sum(cc_rgg)/190;
 
-%centrality
+%%centrality
 figure;
 [~,ccent] = cumulativecentrality(rgg_deg,190);
 bar(ccent);
+saveas(gcf,'./images/rgg_dcent.png');
+deg_cent_avg = sum(rgg_deg)/190;
+
+%%closeness
+clos_cent = closeness(rgg);
+clos_cent_avg = sum(clos_cent/190);
+figure;
+[y,x] = cumulative(clos_cent);
+plot(x,y);
 saveas(gcf,'./images/rgg_ccent.png');
 
-deg_cent = sum(rgg_deg)/190;
-clos_cent = sum(closeness(rgg))/190;
-bet_cent = sum(node_betweenness_faster(rgg))/190;
-eigen_cent = sum(eigencentrality(rgg))/190;
+%%betweeness
+bet_cent = node_betweenness_faster(rgg);
+bet_cent_avg = sum(bet_cent)/190;
+figure;
+[y,x] = cumulative(bet_cent);
+plot(x,y);
+saveas(gcf,'./images/rgg_bcent.png');
+
+%%eigencentrality
+eigen_cent = eigencentrality(rgg)
+eigen_cent_avg = sum(eigen_cent)/190;
+figure;
+[y,x] = cumulative(eigen_cent);
+plot(x,y);
+saveas(gcf,'./images/rgg_ecent.png');

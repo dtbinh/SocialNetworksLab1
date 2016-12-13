@@ -6,52 +6,75 @@ addText = 0;
 G.x = G.x';
 G.y = G.y';
 %% SF(BA)
-sf = pref(vertices, 4);
-G.Adj = full(sf);
+sfba = pref(vertices, 4);
+G.Adj = full(sfba);
 [G.x, G.y] = getNodeCoordinates(vertices);
 G.x = G.x';
 G.y = G.y';
 G.nv = vertices;
-G.ne = sum(sum(full(sf)))/2;
-sf_deg = sum(full(sf));
-sf_deg = sf_deg';
+G.ne = sum(sum(full(sfba)))/2;
+sfba_deg = sum(full(sfba));
+sfba_deg = sfba_deg';
 
 plotGraphBasic(G, markerSize, addText);
 saveas(gcf,'./images/sfba_plot.png');
-[~, cumdist, dist] = cumulativedist(sf_deg,190);
+[~, cumdist, dist] = cumulativedist(sfba_deg,190);
 figure;bar(dist);
 saveas(gcf,'./images/sfba_deg.png');
 figure;bar(cumdist);
 saveas(gcf,'./images/sfba_cumdist.png');
-sf_mean = mean(sf_deg);
-sf_std = std(sf_deg);
+sf_mean = mean(sfba_deg);
+sf_std = std(sfba_deg);
 
-%weighted
+				%weighted
 sfW = 10*rand(vertices);
-sfW = sfW.*full(sf);
+sfW = sfW.*full(sfba);
 sfW_str = sum(sfW);
 [~, cumstr, ~] = cumulativedist(sfW_str,190);
 saveas(gcf,'./images/sfba_cumstr.png');
 figure;bar(cumstr);
 sfW_mean = mean(sfW_str);
 
-% average path length
-avgPath_sf = ave_path_length(sf);
+%% average path length
+avgPath_sfba = ave_path_length(sfba);
+c = all_shortest_paths(sfba);
+var_sfba = var(c(:));
 
-%clustering coefficients
-cc_sf = clustering_coefficients(sf);
+%%clustering coefficients
+[~,cc_sfba] = clustering_coefficients(sfba);
+cc_sfba = cc_sfba';
 figure;
-continuous_cumulative_dist(cc_sf',190);
-saveas(gcf,'./images/sfba_ccdist.png')
-cc_avg=sum(cc_sf)/190;
+[y,x] = cumulative(cc_sfba,190);
+saveas(gcf,'./images/sfba_ccdist.png');
+cc_avg=sum(cc_sfba)/190;
 
-%centrality
+%%centrality
 figure;
-[~,ccent] = cumulativecentrality(sf_deg,190);
+[~,ccent] = cumulativecentrality(sfba_deg,190);
 bar(ccent);
+saveas(gcf,'./images/sfba_dcent.png');
+deg_cent_avg = sum(sfba_deg)/190;
+
+%%closeness
+clos_cent = closeness(sfba);
+clos_cent_avg = sum(clos_cent/190);
+figure;
+[y,x] = cumulative(clos_cent);
+plot(x,y);
 saveas(gcf,'./images/sfba_ccent.png');
 
-deg_cent = sum(sf_deg)/190;
-clos_cent = sum(closeness(sf))/190;
-bet_cent = sum(node_betweenness_faster(sf))/190;
-eigen_cent = sum(eigencentrality(sf))/190;
+%%betweeness
+bet_cent = node_betweenness_faster(sfba);
+bet_cent_avg = sum(bet_cent)/190;
+figure;
+[y,x] = cumulative(bet_cent);
+plot(x,y);
+saveas(gcf,'./images/sfba_bcent.png');
+
+%%eigencentrality
+eigen_cent = eigencentrality(sfba)
+eigen_cent_avg = sum(eigen_cent)/190;
+figure;
+[y,x] = cumulative(eigen_cent);
+plot(x,y);
+saveas(gcf,'./images/sfba_ecent.png');

@@ -35,6 +35,8 @@ regW_mean = mean(regW_str);
 
 %% average path length
 avgPath_reg = ave_path_length(reg);
+c = all_shortest_paths(reg);
+var_reg = var(c(:));
 
 %%clustering coefficients
 [~,cc_reg] = clustering_coefficients(reg);

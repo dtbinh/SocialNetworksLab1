@@ -1,8 +1,8 @@
-function question_i()
-for g=0:1:0.1:1
-    A=smallw(100,200,g);
-    avl=ave_path_length(A);
-    avgroup = clust_coeff(A);
-    disp(avl)
-    disp(avgroup)
-end
+function [avl,av_cc] = question_i()
+  i =1;
+  for g=0:0.1:1
+    A=smallw(190,2,g);
+    avl(i)=ave_path_length(A);
+    av_cc(i)= mean(clustering_coefficients(A));
+    i=i+1;
+  end
